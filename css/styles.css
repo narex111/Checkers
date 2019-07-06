@@ -12,5 +12,5 @@
     background: black;
     width: 400px;
     height: 400px;
-    flex-direction: column-reverse;
+    flex-direction: column;
 }
