@@ -148,7 +148,7 @@ class Game {
         console.log(this.rows)
     }
 
-    figureClicker(){
+    redFigureClicker(){
 //listening to a click and adding number 3 into possible moves in the matrix
         const board = document.querySelector("#board")
 
@@ -183,7 +183,6 @@ class Game {
                     this.rows[i+2][j+2] = 3
                 }
 
-                console.log(this.rows[i+1][j+1] + "<--right possible")
                 console.log(this.rows)
             }
 //deducting 3's in case of a double click
@@ -196,4 +195,104 @@ class Game {
         })
         
     }
+
+        redFigureClicker(){
+//listening to a click and adding number 3 into possible moves in the matrix
+        const board = document.querySelector("#board")
+
+        board.addEventListener("click", (e) =>{
+            const parentSquare = e.target.parentElement
+            const i = parseInt(parentSquare.id[0])
+            const j = parseInt(parentSquare.id[1])
+            if (e.target.className === "red" && e.target.id == ""){
+                e.target.id = "clicked"
+//cleaning all the previous threes in case of consecutive click
+                for (let k=0; k<8; k++){
+                    for(let l=0; l<8; l++){
+                        if(this.rows[k][l] === 3){
+                            this.rows[k][l] -= 3
+                        }
+                    }
+                }
+//adding 3's with different scenarios
+                if(this.rows[i+1][j-1] === 0){
+                    this.rows[i+1][j-1] = 3
+                }
+//this and next "else if"'s are not tested
+                else if(this.rows[i+1][j-1] === 2 && this.rows[i+2][j-2] === 0){
+                    this.rows[i+2][j-2] = 3
+                }
+        /////////////
+
+                if(this.rows[i+1][j+1] === 0){
+                this.rows[i+1][j+1] = 3
+                }
+                else if(this.rows[i+1][j+1] === 2 && this.rows[i+2][j+2] === 0){
+                    this.rows[i+2][j+2] = 3
+                }
+
+                console.log(this.rows)
+            }
+//deducting 3's in case of a double click
+            else if(e.target.className === "red" && e.target.id == "clicked"){
+                e.target.id = ""
+                this.rows[i+1][j-1] -= 3
+                this.rows[i+1][j+1] -= 3
+                console.log(this.rows)
+            }
+        })
+        
+    }
+
+    blueFigureClicker(){
+//listening to a click and adding number 3 into possible moves in the matrix
+        const board = document.querySelector("#board")
+
+        board.addEventListener("click", (e) =>{
+            const parentSquare = e.target.parentElement
+            const i = parseInt(parentSquare.id[0])
+            const j = parseInt(parentSquare.id[1])
+            if (e.target.className === "blue" && e.target.id == ""){
+                e.target.id = "clicked"
+//cleaning all the previous threes in case of consecutive click
+                for (let k=0; k<8; k++){
+                    for(let l=0; l<8; l++){
+                        if(this.rows[k][l] === 3){
+                            this.rows[k][l] -= 3
+                        }
+                    }
+                }
+//adding 3's with different scenarios
+                if(this.rows[i-1][j-1] === 0){
+                    this.rows[i-1][j-1] = 3
+                }
+//this and next "else if"'s are not tested
+                else if(this.rows[i-1][j-1] === 1 && this.rows[i-2][j-2] === 0){
+                    this.rows[i-2][j-2] = 3
+                }
+        /////////////
+
+                if(this.rows[i-1][j+1] === 0){
+                this.rows[i-1][j+1] = 3
+                }
+                else if(this.rows[i-1][j+1] === 2 && this.rows[i-2][j+2] === 0){
+                    this.rows[i-2][j+2] = 3
+                }
+
+                console.log(this.rows)
+            }
+//deducting 3's in case of a double click
+            else if(e.target.className === "blue" && e.target.id == "clicked"){
+                e.target.id = ""
+                this.rows[i-1][j-1] -= 3
+                this.rows[i-1][j+1] -= 3
+                console.log(this.rows)
+            }
+        })
+        
+    }
+
+
+
+
 }
