@@ -110,6 +110,7 @@ class Game {
     }
 
     gameSetter(){
+        this.matrixSetter()
 //creating figures and connecting this.row matrix with the #board <div>
         const board = document.getElementById("board").childNodes
         for(let i=1; i<=8; i++){
@@ -155,11 +156,14 @@ class Game {
             const i = parseInt(parentSquare.id[0])
             const j = parseInt(parentSquare.id[1])
             if (e.target.className === "red" && e.target.id == ""){
-//cleaning all the previous 3's in case of consecutive click
+//cleaning previous "click" id's and "possible"'s both on the board and in the matrix
                 for (let k=0; k<8; k++){
-                    for(let l=0; l<8; l++){
-                        //cleaning previous clickes
-                        const fig = document.getElementById(k.toString()+l.toString()).firstChild
+                    for(let l=0; l<8; l++){ 
+                        const sq = document.getElementById(k.toString()+l.toString())
+                        const fig = sq.firstChild
+                        if(sq.className.length > 0){
+                            sq.className = ""
+                        }
                         if (Boolean(fig) === true && fig.id === "clicked"){
                             fig.id = ""
                         }
@@ -173,18 +177,22 @@ class Game {
 //adding 3's with different scenarios
                 if(this.rows[i+1][j-1] === 0){
                     this.rows[i+1][j-1] = 3
+                    document.getElementById((i+1).toString() + (j-1).toString()).className = "possible"
                 }
 //this and next "else if"'s are not tested
                 else if(this.rows[i+1][j-1] === 2 && this.rows[i+2][j-2] === 0){
                     this.rows[i+2][j-2] = 3
+                    document.getElementById((i+2).toString() + (j-2).toString()).className = "possible"
                 }
         /////////////
 
                 if(this.rows[i+1][j+1] === 0){
                 this.rows[i+1][j+1] = 3
+                document.getElementById((i+1).toString() + (j+1).toString()).className = "possible"
                 }
                 else if(this.rows[i+1][j+1] === 2 && this.rows[i+2][j+2] === 0){
                     this.rows[i+2][j+2] = 3
+                    document.getElementById((i+2).toString() + (j+2).toString()).className = "possible"
                 }
 
                 console.log(this.rows)
@@ -194,6 +202,13 @@ class Game {
                 e.target.id = ""
                 this.rows[i+1][j-1] -= 3
                 this.rows[i+1][j+1] -= 3
+//cleaning all the "possible" classes
+                for (let k=0; k<8; k++){
+                    for(let l=0; l<8; l++){
+                        document.getElementById(k.toString()+l.toString()).className = ""
+                    }
+                }
+
                 console.log(this.rows)
             }
         })
@@ -209,55 +224,88 @@ class Game {
             const i = parseInt(parentSquare.id[0])
             const j = parseInt(parentSquare.id[1])
             if (e.target.className === "blue" && e.target.id == ""){
-                e.target.id = "clicked"
-//cleaning all the previous threes in case of consecutive click
-                for (let k=0; k<8; k++){
-                    for(let l=0; l<8; l++){
-                        const fig = document.getElementById(k.toString()+l.toString()).firstChild
-                        if (Boolean(fig) === true && fig.id === "clicked"){
-                            fig.id = ""
-                        }
-                        if(this.rows[k][l] === 3){
-                            this.rows[k][l] -= 3
-                        }
-                    }
+
+//cleaning previous "click" id's and "possible"'s both on the board and in the matrix
+        for (let k=0; k<8; k++){
+            for(let l=0; l<8; l++){ 
+                const sq = document.getElementById(k.toString()+l.toString())
+                const fig = sq.firstChild
+                if(sq.className.length > 0){
+                    sq.className = ""
                 }
+                if (Boolean(fig) === true && fig.id === "clicked"){
+                    fig.id = ""
+                }
+                //cleaning previous 3's 
+                if(this.rows[k][l] === 3){
+                    this.rows[k][l] -= 3
+                }
+            }
+        }
+
+
 //adding 3's with different scenarios
                 if(this.rows[i-1][j-1] === 0){
                     this.rows[i-1][j-1] = 3
+                    document.getElementById((i-1).toString() + (j-1).toString()).className = "possible"
                 }
 //this and next "else if"'s are not tested
                 else if(this.rows[i-1][j-1] === 1 && this.rows[i-2][j-2] === 0){
                     this.rows[i-2][j-2] = 3
+                    document.getElementById((i-2).toString() + (j-2).toString()).className = "possible"
                 }
         /////////////
 
                 if(this.rows[i-1][j+1] === 0){
                 this.rows[i-1][j+1] = 3
+                document.getElementById((i-1).toString() + (j+1).toString()).className = "possible"
                 }
                 else if(this.rows[i-1][j+1] === 2 && this.rows[i-2][j+2] === 0){
                     this.rows[i-2][j+2] = 3
+                    document.getElementById((i-2).toString() + (j+2).toString()).className = "possible"
                 }
-
-                console.log(this.rows)
+                e.target.id = "clicked"
             }
 //deducting 3's in case of a double click
             else if(e.target.className === "blue" && e.target.id == "clicked"){
-                e.target.id = ""
+                e.target.id=""
                 this.rows[i-1][j-1] -= 3
                 this.rows[i-1][j+1] -= 3
-                console.log(this.rows)
+//cleaning all the "possible" classes
+                for (let k=0; k<8; k++){
+                    for(let l=0; l<8; l++){
+                        document.getElementById(k.toString()+l.toString()).className = ""
+                    }
+                }            
             }
+
         })
         
     }
 
-    mover(){
-        this.redFigureClicker()
-        this.blueFigureClicker()
-
+    possibleMoves(){
+        for (let i=0; i<8; i++){
+            for(let j=0; j<8; j++){
+                const square = document.getElementById(i.toString()+j.toString())
+                console.log(square)
+            }
+        }
 
     }
+
+    // mover(){
+    //     for (let k=0; k<8; k++){
+    //         for(let l=0; l<8; l++){
+    //             if(this.rows[k][l] === 3){
+
+
+    //             }
+    //             const fig = document.getElementById(k.toString()+l.toString()).firstChild
+    //             if (Boolean(fig) === true && fig.id === "clicked"){
+
+    //             }
+
+    // }
 
 
 }

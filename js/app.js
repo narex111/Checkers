@@ -1,9 +1,10 @@
 const checkers = new Game()
 
-checkers.matrixSetter()
+// checkers.matrixSetter()
 checkers.gameSetter()
 checkers.redFigureClicker()
 checkers.blueFigureClicker()
+checkers.possibleMoves()
 
 console.log(checkers.rows)
 
