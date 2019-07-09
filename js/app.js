@@ -3,10 +3,9 @@ const checkers = new Game()
 // checkers.matrixSetter()
 checkers.gameSetter()
 checkers.redFigureClicker()
-checkers.blueFigureClicker()
-checkers.possibleMoves()
+// checkers.possibleMoves()
 
-console.log(checkers.rows)
+// console.log(checkers.rows)
 
 ///test///
 // const i = 2

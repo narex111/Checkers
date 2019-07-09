@@ -1,6 +1,7 @@
 class Game {
     constructor(){
     this.rows = [];
+    this.previous = [];
     }
     boardMaker(){
         for(let i=0; i<8; i++){
@@ -82,9 +83,6 @@ class Game {
     matrixSetter(){
 //the initial setting of this.rows matrix
 
-//sreating the board
-        this.boardMaker()
-
 //setting Player1 figures in this.rows matrix
         for(let i=0; i<3; i++){
             for(let j=0; j<8; j++){
@@ -110,6 +108,8 @@ class Game {
     }
 
     gameSetter(){
+
+        this.boardMaker()
         this.matrixSetter()
 //creating figures and connecting this.row matrix with the #board <div>
         const board = document.getElementById("board").childNodes
@@ -211,8 +211,8 @@ class Game {
 
                 console.log(this.rows)
             }
+            this.possibleMoves()
         })
-        
     }
 
     blueFigureClicker(){
@@ -280,16 +280,25 @@ class Game {
             }
 
         })
-        
+        console.log(this.rows)
     }
 
     possibleMoves(){
+        this.previous.forEach((element,index) =>{
+            element.style.backgroundColor = "black"
+        })
+
         for (let i=0; i<8; i++){
             for(let j=0; j<8; j++){
                 const square = document.getElementById(i.toString()+j.toString())
-                console.log(square)
+                if(this.rows[i][j] === 3){
+                    square.style.backgroundColor = "yellow"
+                    this.previous.push(square)
+                }
             }
         }
+        console.log(this.previous)
+
 
     }
 
