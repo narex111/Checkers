@@ -108,9 +108,9 @@ class Game {
     }
 
     gameSetter(){
-
         this.boardMaker()
         this.matrixSetter()
+
 //creating figures and connecting this.row matrix with the #board <div>
         const board = document.getElementById("board").childNodes
         for(let i=1; i<=8; i++){
@@ -242,8 +242,7 @@ class Game {
                 }
             }
         }
-
-
+        e.target.id = "clicked"
 //adding 3's with different scenarios
                 if(this.rows[i-1][j-1] === 0){
                     this.rows[i-1][j-1] = 3
@@ -264,7 +263,7 @@ class Game {
                     this.rows[i-2][j+2] = 3
                     document.getElementById((i-2).toString() + (j+2).toString()).className = "possible"
                 }
-                e.target.id = "clicked"
+                console.log(this.rows)
             }
 //deducting 3's in case of a double click
             else if(e.target.className === "blue" && e.target.id == "clicked"){
@@ -276,18 +275,20 @@ class Game {
                     for(let l=0; l<8; l++){
                         document.getElementById(k.toString()+l.toString()).className = ""
                     }
-                }            
+                }     
+                console.log(this.rows)       
             }
-
+            this.possibleMoves()
         })
-        console.log(this.rows)
     }
 
     possibleMoves(){
+//makes all the squares in this.previous "black"
         this.previous.forEach((element,index) =>{
             element.style.backgroundColor = "black"
         })
 
+//connects this.row with #board by coloring "yellow" squares that are have 3's in this.row matrix 
         for (let i=0; i<8; i++){
             for(let j=0; j<8; j++){
                 const square = document.getElementById(i.toString()+j.toString())
@@ -298,9 +299,9 @@ class Game {
             }
         }
         console.log(this.previous)
-
-
     }
+
+    
 
     // mover(){
     //     for (let k=0; k<8; k++){
