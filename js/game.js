@@ -4,6 +4,7 @@ class Game {
     this.previousPossibles = [];
     this.red = {};
     this.blue = {};
+    this.turn = true;
     }
     boardMaker(){
         for(let i=0; i<8; i++){
@@ -197,7 +198,7 @@ class Game {
             const parentSquare = e.target.parentElement
             const i = parseInt(parentSquare.id[0])
             const j = parseInt(parentSquare.id[1])
-            if (e.target.className === "red" && e.target.id == ""){
+            if (this.turn === false && e.target.className === "red" && e.target.id == ""){
 //cleaning previous "click" id's and "possible"'s both on the board and in the matrix
             this.cleaner()    
             e.target.id = "clicked"
@@ -223,9 +224,12 @@ class Game {
                     document.getElementById((i+2).toString() + (j+2).toString()).className = "possible"
                 }
                 console.log(this.rows)
+                this.turn = true
+                console.log(this.turn + "<- after click on red")
+                // this.switcher()
             }
 //deducting 3's in case of a double click
-            else if(e.target.className === "red" && e.target.id == "clicked"){
+            else if(this.turn === true && e.target.className === "red" && e.target.id == "clicked"){
                 e.target.id = ""
                 this.rows[i+1][j-1] -= 3
                 this.rows[i+1][j+1] -= 3
@@ -235,10 +239,14 @@ class Game {
                         document.getElementById(k.toString()+l.toString()).className = ""
                     }
                 }
-
+                this.turn = false
+                console.log(this.turn + "<- after double click on red")
+                // this.switcher()
                 console.log(this.rows)
             }
             this.possibleMoves()
+            this.play()
+            // this.switcher()
         })
         this.mover()
     }
@@ -251,7 +259,7 @@ class Game {
             const parentSquare = e.target.parentElement
             const i = parseInt(parentSquare.id[0])
             const j = parseInt(parentSquare.id[1])
-            if (e.target.className === "blue" && e.target.id == ""){
+            if (this.turn === true && e.target.className === "blue" && e.target.id == ""){
 
 //cleaning previous "click" id's and "possible"'s both on the board and in the matrix
             this.cleaner()
@@ -277,9 +285,14 @@ class Game {
                     document.getElementById((i-2).toString() + (j+2).toString()).className = "possible"
                 }
                 console.log(this.rows)
+                            
+                this.turn = false
+                console.log(this.turn + "<- after click on blue")
+                // this.switcher()
+
             }
 //deducting 3's in case of a double click
-            else if(e.target.className === "blue" && e.target.id == "clicked"){
+            else if(this.turn === false && e.target.className === "blue" && e.target.id == "clicked"){
                 e.target.id=""
                 this.rows[i-1][j-1] -= 3
                 this.rows[i-1][j+1] -= 3
@@ -289,9 +302,16 @@ class Game {
                         document.getElementById(k.toString()+l.toString()).className = ""
                     }
                 }     
-                console.log(this.rows)       
+                console.log(this.rows)  
+                
+                            
+                this.turn = true
+                console.log(this.turn + "<- after double click on blue")
+                // this.switcher()
             }
             this.possibleMoves()
+            this.play()
+            // this.switcher()
         })
         this.mover()
     }
@@ -315,8 +335,6 @@ class Game {
     }
 
     mover(){
-
-
         board.addEventListener("click", (e) =>{
             const clicked = document.querySelector("#clicked")
             if (e.target.className === "possible"){
@@ -330,7 +348,7 @@ class Game {
                         this.rows[parseInt(clicked.parentNode.id[0])+1][parseInt(clicked.parentNode.id[1])-1] = 0
                         this.matrixToSquare(parseInt(clicked.parentNode.id[0])+1, parseInt(clicked.parentNode.id[1])-1)
                     }
-                    //moving red to e.target
+                    //moving 1 to e.target position at this.row matrix
                     this.squareToMatrix(e.target, 1)
                 } 
                 
@@ -344,16 +362,51 @@ class Game {
                         this.rows[parseInt(clicked.parentNode.id[0])-1][parseInt(clicked.parentNode.id[1])-1] = 0
                         this.matrixToSquare(parseInt(clicked.parentNode.id[0])-1, parseInt(clicked.parentNode.id[1])-1)
                     }
-                    //moving red to e.target
+                    //moving 2 to e.target position in this.row matrix
                     this.squareToMatrix(e.target, 2)
                 }
+
+                // console.log(this.turn)
+                // this.turn = false
+                // console.log(this.turn)
+
                 //cleaning where the figure used to be
                 this.squareToMatrix(clicked.parentNode, 0)
                 //moving the clicked figure to e.target
                 e.target.appendChild(clicked)
                 this.cleaner()
             }
+            // this.turn = !this.turn
         })
+    }
+
+    switcher(){
+        console.log(this.turn + "<- before entering the if conditional")
+        if(this.turn === true){
+            console.log(this.turn + "<- before entering blueFigClicker")
+            this.blueFigureClicker()
+
+            console.log(this.turn + "<- after entering blueFigClicker")
+        } else if(this.turn === false){
+            console.log(this.turn + "<- before entering redFigClicker")
+            this.redFigureClicker()
+            console.log(this.turn + "<- after entering redFigClicker")
+
+        }
+    }
+
+    play(){
+        const redFigs = document.getElementsByClassName("red")
+        const blueFigs = document.getElementsByClassName("blue")
+        console.log(redFigs)
+        console.log(blueFigs)
+        if(redFigs.length === 0){
+            console.log("Blue won")
+        }
+        else if(blueFigs.length === 0){
+            console.log("Red won")
+        }
+
     }
 
 
