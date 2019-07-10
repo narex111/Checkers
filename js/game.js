@@ -1,7 +1,7 @@
 class Game {
     constructor(){
     this.rows = [];
-    this.previous = [];
+    this.previousPossibles = [];
     }
     boardMaker(){
         for(let i=0; i<8; i++){
@@ -147,6 +147,35 @@ class Game {
         }
     }
 
+    //------------TOOLS---------------------
+    cleaner(){
+        for (let k=0; k<8; k++){
+            for(let l=0; l<8; l++){ 
+                const sq = document.getElementById(k.toString()+l.toString())
+                const fig = sq.firstChild
+                if(sq.className.length > 0){
+                    sq.className = ""
+                }
+                if (Boolean(fig) === true && fig.id === "clicked"){
+                    fig.id = ""
+                }
+                //cleaning previous 3's 
+                if(this.rows[k][l] === 3){
+                    this.rows[k][l] -= 3
+                }
+            }
+        }
+    }
+
+    squareToMatrix(element, value){
+        const id = element.id
+        const i = id[0]
+        const j = id[1]
+        this.rows[i][j] = value
+    }
+    //---------------------------------------
+
+
     redFigureClicker(){
 //listening to a click and adding number 3 into possible moves in the matrix
         const board = document.querySelector("#board")
@@ -157,23 +186,9 @@ class Game {
             const j = parseInt(parentSquare.id[1])
             if (e.target.className === "red" && e.target.id == ""){
 //cleaning previous "click" id's and "possible"'s both on the board and in the matrix
-                for (let k=0; k<8; k++){
-                    for(let l=0; l<8; l++){ 
-                        const sq = document.getElementById(k.toString()+l.toString())
-                        const fig = sq.firstChild
-                        if(sq.className.length > 0){
-                            sq.className = ""
-                        }
-                        if (Boolean(fig) === true && fig.id === "clicked"){
-                            fig.id = ""
-                        }
-                        //cleaning previous 3's 
-                        if(this.rows[k][l] === 3){
-                            this.rows[k][l] -= 3
-                        }
-                    }
-                }
-                e.target.id = "clicked"
+            this.cleaner()    
+            e.target.id = "clicked"
+
 //adding 3's with different scenarios
                 if(this.rows[i+1][j-1] === 0){
                     this.rows[i+1][j-1] = 3
@@ -194,7 +209,6 @@ class Game {
                     this.rows[i+2][j+2] = 3
                     document.getElementById((i+2).toString() + (j+2).toString()).className = "possible"
                 }
-
                 console.log(this.rows)
             }
 //deducting 3's in case of a double click
@@ -213,6 +227,7 @@ class Game {
             }
             this.possibleMoves()
         })
+        this.mover()
     }
 
     blueFigureClicker(){
@@ -226,22 +241,7 @@ class Game {
             if (e.target.className === "blue" && e.target.id == ""){
 
 //cleaning previous "click" id's and "possible"'s both on the board and in the matrix
-        for (let k=0; k<8; k++){
-            for(let l=0; l<8; l++){ 
-                const sq = document.getElementById(k.toString()+l.toString())
-                const fig = sq.firstChild
-                if(sq.className.length > 0){
-                    sq.className = ""
-                }
-                if (Boolean(fig) === true && fig.id === "clicked"){
-                    fig.id = ""
-                }
-                //cleaning previous 3's 
-                if(this.rows[k][l] === 3){
-                    this.rows[k][l] -= 3
-                }
-            }
-        }
+        this.cleaner()
         e.target.id = "clicked"
 //adding 3's with different scenarios
                 if(this.rows[i-1][j-1] === 0){
@@ -280,11 +280,12 @@ class Game {
             }
             this.possibleMoves()
         })
+        this.mover()
     }
 
     possibleMoves(){
 //makes all the squares in this.previous "black"
-        this.previous.forEach((element,index) =>{
+        this.previousPossibles.forEach((element,index) =>{
             element.style.backgroundColor = "black"
         })
 
@@ -294,16 +295,31 @@ class Game {
                 const square = document.getElementById(i.toString()+j.toString())
                 if(this.rows[i][j] === 3){
                     square.style.backgroundColor = "yellow"
-                    this.previous.push(square)
+                    this.previousPossibles.push(square)
                 }
             }
         }
-        console.log(this.previous)
+        // console.log(this.previousPossibles)
     }
 
-    
+    mover(){
 
-    // mover(){
+
+        board.addEventListener("click", (e) =>{
+            const board = document.getElementById("board")
+            const possibles = document.getElementsByClassName("possible")
+            const clicked = document.querySelector("#clicked")
+            if (e.target.className === "possible"){
+                this.squareToMatrix(clicked.parentNode, 0)
+                e.target.appendChild(clicked)
+                if (clicked.className === "red"){
+                    this.squareToMatrix(e.target, 1)
+                } else if(clicked.className === "blue"){
+                    this.squareToMatrix(e.target, 2)
+                }
+                this.cleaner()
+            }
+        })
     //     for (let k=0; k<8; k++){
     //         for(let l=0; l<8; l++){
     //             if(this.rows[k][l] === 3){
@@ -315,7 +331,7 @@ class Game {
 
     //             }
 
-    // }
+    }
 
 
 }
