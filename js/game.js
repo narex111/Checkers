@@ -380,20 +380,20 @@ class Game {
         })
     }
 
-    switcher(){
-        console.log(this.turn + "<- before entering the if conditional")
-        if(this.turn === true){
-            console.log(this.turn + "<- before entering blueFigClicker")
-            this.blueFigureClicker()
+    // switcher(){
+    //     console.log(this.turn + "<- before entering the if conditional")
+    //     if(this.turn === true){
+    //         console.log(this.turn + "<- before entering blueFigClicker")
+    //         this.blueFigureClicker()
 
-            console.log(this.turn + "<- after entering blueFigClicker")
-        } else if(this.turn === false){
-            console.log(this.turn + "<- before entering redFigClicker")
-            this.redFigureClicker()
-            console.log(this.turn + "<- after entering redFigClicker")
+    //         console.log(this.turn + "<- after entering blueFigClicker")
+    //     } else if(this.turn === false){
+    //         console.log(this.turn + "<- before entering redFigClicker")
+    //         this.redFigureClicker()
+    //         console.log(this.turn + "<- after entering redFigClicker")
 
-        }
-    }
+    //     }
+    // }
 
     play(){
         const redFigs = document.getElementsByClassName("red")
@@ -402,9 +402,13 @@ class Game {
         console.log(blueFigs)
         if(redFigs.length === 0){
             console.log("Blue won")
+            document.getElementById("result").innerText = "BLUE WON"
+            document.getElementById("result").style.display = "flex"
         }
         else if(blueFigs.length === 0){
             console.log("Red won")
+            document.getElementById("result").innerText = "RED WON"
+            document.getElementById("result").style.display = "flex"
         }
 
     }
