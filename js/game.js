@@ -287,7 +287,7 @@ class Game {
             const parentSquare = e.target.parentElement
             const i = parseInt(parentSquare.id[0])
             const j = parseInt(parentSquare.id[1])
-            if (this.turn === false && e.target.className === "red" && e.target.id == ""){
+            if (this.moveNumber % 2 !== 0 && this.turn === false && e.target.className === "red" && e.target.id == ""){
 //cleaning previous "click" id's and "possible"'s both on the board and in the matrix
             this.cleaner()    
             e.target.id = "clicked"
@@ -325,7 +325,7 @@ class Game {
             const parentSquare = e.target.parentElement
             const i = parseInt(parentSquare.id[0])
             const j = parseInt(parentSquare.id[1])
-            if (this.turn === true && e.target.className === "blue" && e.target.id == ""){
+            if (this.moveNumber % 2 === 0 && this.turn === true && e.target.className === "blue" && e.target.id == ""){
 
 //cleaning previous "click" id's and "possible"'s both on the board and in the matrix
             this.cleaner()
@@ -413,6 +413,8 @@ class Game {
                     }
                     //moving 1 to e.target position at this.row matrix
                     this.squareToMatrix(e.target, 1)
+                    this.moveNumber++
+                    console.log(this.moveNumber + "<-moveNumber after red move")
                 } 
                 
                 else if(clicked.className === "blue"){
@@ -427,6 +429,8 @@ class Game {
                     }
                     //moving 2 to e.target position in this.row matrix
                     this.squareToMatrix(e.target, 2)
+                    this.moveNumber++
+                    console.log(this.moveNumber + "<-moveNumber after blue move")
                 }
 
                 //cleaning where the figure used to be
@@ -435,6 +439,8 @@ class Game {
                 e.target.appendChild(clicked)
                 this.cleaner()
             }
+            // this.moveNumber++
+            // console.log(this.moveNumber + "<-moveNumber")
         })
     }
 

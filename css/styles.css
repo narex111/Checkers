@@ -5,14 +5,16 @@ html, body{
 }
 .container{
     display: flex;
-    background-image: url("/Users/admin/Downloads/dali.jpeg");
+    background-image: url("/Users/admin/Downloads/checkart2.png");
     background-size: cover;
+    background-position: center;
     /* background-position: center; */
     justify-content: center;
+    /* justify-content: space-around;      */
     align-items: center;
     flex-direction: column;
-    width: 100vw;
-    height: 100vw;
+    min-width: 100%;
+    min-height: 100vw;
     
 }
 
@@ -23,21 +25,27 @@ html, body{
     background-position: center;
     justify-content: center;
     align-items: center;
-    width: 500px;
-    height: 500px;
+    width: 440px;
+    height: 440px;
 }
 
 #board{
     display: flex;
     background: black;
-    width: 400px;
-    height: 408px;
+    width: 340px;
+    height: 357px;
     flex-direction: column;
-    border-radius: 10%;
+    border-radius: 20%;
+    margin: auto;
 }
 
 #result{
     /* display: flex; */
     font-size: 90px;
     color: white;
+}
+
+img{
+    max-width: 10vw;
+    max-height: 10vw;
 }
