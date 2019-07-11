@@ -1,4 +1,8 @@
 
+html, body{
+    margin: 0;
+    padding: 0;
+}
 .container{
     display: flex;
     background-image: url("/Users/admin/Downloads/dali.jpeg");

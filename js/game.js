@@ -5,6 +5,7 @@ class Game {
     this.red = {};
     this.blue = {};
     this.turn = true;
+    this.moveNumber = 0;
     }
     boardMaker(){
         for(let i=0; i<8; i++){
@@ -184,8 +185,7 @@ class Game {
 
         }
 
-        redScenarios(i, j){
-            //adding 3's with different scenarios
+        scenarios(i,j){
             if(this.rows[i+1][j-1] === 0){
                 this.rows[i+1][j-1] = 3
                 document.getElementById((i+1).toString() + (j-1).toString()).className = "possible"
@@ -201,12 +201,79 @@ class Game {
                 this.rows[i+1][j+1] = 3
                 document.getElementById((i+1).toString() + (j+1).toString()).className = "possible"
                 }
-            else if(this.rows[i+1][j+1] === 2 && this.rows[i+2][j+2] === 0){
+            else if(i+2<this.rows.length && this.rows[i+1][j+1] === 2 && this.rows[i+2][j+2] === 0){
                 this.rows[i+2][j+2] = 3
                 const k = i+2
                 const l = j+2
                 // this.redScenarios(k, l)
                 document.getElementById((i+2).toString() + (j+2).toString()).className = "possible"
+            }
+            if(this.rows[i-1][j-1] === 0){
+                this.rows[i-1][j-1] = 3
+                document.getElementById((i-1).toString() + (j-1).toString()).className = "possible"
+            }
+            /////////////
+            else if (i-2>=0 && this.rows[i-1][j-1] === 1 && this.rows[i-2][j-2] === 0){
+                this.rows[i-2][j-2] = 3
+                document.getElementById((i-2).toString() + (j-2).toString()).className = "possible"
+            }
+            /////////////
+
+            if(this.rows[i-1][j+1] === 0){
+            this.rows[i-1][j+1] = 3
+            document.getElementById((i-1).toString() + (j+1).toString()).className = "possible"
+            }
+            else if(this.rows[i-1][j+1] === 1 && this.rows[i-2][j+2] === 0){
+                this.rows[i-2][j+2] = 3
+                document.getElementById((i-2).toString() + (j+2).toString()).className = "possible"
+            }
+        }
+
+        redScenarios(i, j){
+        //adding 3's with different scenarios
+            if(this.rows[i+1][j-1] === 0){
+                this.rows[i+1][j-1] = 3
+                document.getElementById((i+1).toString() + (j-1).toString()).className = "possible"
+            }
+            else if(this.rows[i+1][j-1] === 2 && this.rows[i+2][j-2] === 0){
+                this.rows[i+2][j-2] = 3
+                const k = i+2
+                const l = j-2
+                // this.redScenarios(k, l)
+                document.getElementById((i+2).toString() + (j-2).toString()).className = "possible"
+            }
+            if(this.rows[i+1][j+1] === 0){
+                this.rows[i+1][j+1] = 3
+                document.getElementById((i+1).toString() + (j+1).toString()).className = "possible"
+                }
+            else if(i+2<this.rows.length && this.rows[i+1][j+1] === 2 && this.rows[i+2][j+2] === 0){
+                this.rows[i+2][j+2] = 3
+                const k = i+2
+                const l = j+2
+                // this.redScenarios(k, l)
+                document.getElementById((i+2).toString() + (j+2).toString()).className = "possible"
+            }
+        }
+
+        blueScenarios(i, j){
+            if(this.rows[i-1][j-1] === 0){
+                this.rows[i-1][j-1] = 3
+                document.getElementById((i-1).toString() + (j-1).toString()).className = "possible"
+            }
+            /////////////
+            else if (i-2>=0 && this.rows[i-1][j-1] === 1 && this.rows[i-2][j-2] === 0){
+                this.rows[i-2][j-2] = 3
+                document.getElementById((i-2).toString() + (j-2).toString()).className = "possible"
+            }
+            /////////////
+
+            if(this.rows[i-1][j+1] === 0){
+            this.rows[i-1][j+1] = 3
+            document.getElementById((i-1).toString() + (j+1).toString()).className = "possible"
+            }
+            else if(this.rows[i-1][j+1] === 1 && this.rows[i-2][j+2] === 0){
+                this.rows[i-2][j+2] = 3
+                document.getElementById((i-2).toString() + (j+2).toString()).className = "possible"
             }
         }
 
@@ -263,28 +330,30 @@ class Game {
 //cleaning previous "click" id's and "possible"'s both on the board and in the matrix
             this.cleaner()
             e.target.id = "clicked"
+            this.blueScenarios(i, j)
 //adding 3's with different scenarios
-                if(this.rows[i-1][j-1] === 0){
-                    this.rows[i-1][j-1] = 3
-                    document.getElementById((i-1).toString() + (j-1).toString()).className = "possible"
-                }
-                /////////////
-                else if(this.rows[i-1][j-1] === 1 && this.rows[i-2][j-2] === 0){
-                    this.rows[i-2][j-2] = 3
-                    document.getElementById((i-2).toString() + (j-2).toString()).className = "possible"
-                }
-                /////////////
+                // if(this.rows[i-1][j-1] === 0){
+                //     this.rows[i-1][j-1] = 3
+                //     document.getElementById((i-1).toString() + (j-1).toString()).className = "possible"
+                // }
+                // /////////////
+                // else if(this.rows[i-1][j-1] === 1 && this.rows[i-2][j-2] === 0){
+                //     this.rows[i-2][j-2] = 3
+                //     document.getElementById((i-2).toString() + (j-2).toString()).className = "possible"
+                // }
+                // /////////////
 
-                if(this.rows[i-1][j+1] === 0){
-                this.rows[i-1][j+1] = 3
-                document.getElementById((i-1).toString() + (j+1).toString()).className = "possible"
-                }
-                else if(this.rows[i-1][j+1] === 1 && this.rows[i-2][j+2] === 0){
-                    this.rows[i-2][j+2] = 3
-                    document.getElementById((i-2).toString() + (j+2).toString()).className = "possible"
-                }
+                // if(this.rows[i-1][j+1] === 0){
+                // this.rows[i-1][j+1] = 3
+                // document.getElementById((i-1).toString() + (j+1).toString()).className = "possible"
+                // }
+                // else if(this.rows[i-1][j+1] === 1 && this.rows[i-2][j+2] === 0){
+                //     this.rows[i-2][j+2] = 3
+                //     document.getElementById((i-2).toString() + (j+2).toString()).className = "possible"
+                // }
                 console.log(this.rows)    
                 this.turn = false
+                console.log(this.turn + "<- after click on blue")
             }
 //deducting 3's in case of a double click
             else if(this.turn === false && e.target.className === "blue" && e.target.id == "clicked"){
