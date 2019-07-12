@@ -2,7 +2,8 @@
 --------
 
 ## Description
-[Play Here](https://narex111.github.io/Checkers/)
+[Play Here](https://narex111.github.io/Checkers/)<br>
+
 Checkers is a strategy board game for two players which involve diagonal moves of uniform game pieces and captures by jumping over opponent pieces.
 
 ## Rules
