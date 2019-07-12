@@ -10,7 +10,7 @@ Pieces move one step diagonally forwards, and capture an opponent's pieces by mo
 ## Design
 The interface is designed to communicate an idea that the we are pieces on a board. The frame represents a deterministic nature of both worlds, inside and outside the game. A colorfull checkboard-style background represents the unknown beyond the reality players and pieces of the game can possibly grasp.
 
-![alt text](./images/ScreenShot.png)
+![alt text](images/ScreenShot.png)
 
 > Follow your heart.
 
