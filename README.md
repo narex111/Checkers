@@ -1,7 +1,7 @@
 # Checkers
 --------
 
-## Description
+## Link
 [Play Here](https://narex111.github.io/Checkers/)<br>
 
 ## Description
